@@ -4,9 +4,13 @@ namespace BookStore.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index ()
+        public ViewResult Index ()
         {
-            return "Hello from Home";
+            return View();
+        }
+        public ViewResult AboutUs()
+        {
+            return View();
         }
     }
 }

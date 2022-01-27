@@ -8,3 +8,5 @@
 /BookStore/BookStore/BookStore.csproj.user
 /BookStore/.vs/BookStore/config
 /BookStore/BookStore/bin/Debug/netcoreapp3.1
+/BookStore/.vs/BookStore
+/BookStore/BookStore/wwwroot/lib
