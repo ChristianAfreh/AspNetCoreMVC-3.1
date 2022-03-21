@@ -24,10 +24,15 @@ namespace BookStore
 
             services.AddControllersWithViews();
 #if DEBUG
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option =>
+            {
+                //Use this code to disable client-side validation
+                option.HtmlHelperOptions.ClientValidationEnabled = true;    
+            });
 #endif
             services.AddScoped<BookRepository, BookRepository>();
             services.AddScoped<LanguageRepository, LanguageRepository>();
+            services.AddScoped<CategoryRepository, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

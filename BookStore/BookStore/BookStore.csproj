@@ -14,6 +14,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20220206201843_init.cs" />
     <Compile Remove="Migrations\20220206201843_init.Designer.cs" />
+    <Compile Remove="Migrations\20220321123620_addedCategoryTable.cs" />
+    <Compile Remove="Migrations\20220321123620_addedCategoryTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

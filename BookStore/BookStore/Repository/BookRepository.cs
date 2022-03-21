@@ -23,10 +23,12 @@ namespace BookStore.Repository
                 Title = model.Title,
                 Author = model.Author,
                 Description = model.Description,
+                CategoryId = model.CategoryId,
                 LanguageId = model.LanguageId,
                 TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn = DateTime.UtcNow,    
+                UpdatedOn = DateTime.UtcNow,
+                CoverPhotoUrl = model.CoverPhotoUrl,
             };
             
             await _context.Book.AddAsync(newBook);
@@ -46,12 +48,13 @@ namespace BookStore.Repository
                     books.Add(new BookModel()
                     {
                         Author = book.Author,
-                        Category = book.Category,
+                        CategoryId = book.CategoryId,
                         Description = book.Description,
                         Id = book.Id,
                         LanguageId = book.LanguageId,
                         Title = book.Title,
-                        TotalPages = book.TotalPages
+                        TotalPages = book.TotalPages,
+                        CoverPhotoUrl = book.CoverPhotoUrl,
                     });
                 }
             }
@@ -64,13 +67,15 @@ namespace BookStore.Repository
 
                 {
                     Author = book.Author,
-                    Category = book.Category,
+                    CategoryId = book.CategoryId,
+                    Category = book.Category.Name,
                     Description = book.Description,
                     Id = book.Id,
                     LanguageId = book.LanguageId,
                     Language = book.Language.Name,
                     Title = book.Title,
-                    TotalPages = book.TotalPages
+                    TotalPages = book.TotalPages,
+                    CoverPhotoUrl = book.CoverPhotoUrl,
                 }).FirstOrDefaultAsync();
 
             return book;
