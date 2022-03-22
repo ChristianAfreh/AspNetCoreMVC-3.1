@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\books\gallery1\**" />
     <Compile Remove="wwwroot\images\books\**" />
+    <Content Remove="wwwroot\books\gallery1\**" />
     <Content Remove="wwwroot\images\books\**" />
+    <EmbeddedResource Remove="wwwroot\books\gallery1\**" />
     <EmbeddedResource Remove="wwwroot\images\books\**" />
+    <None Remove="wwwroot\books\gallery1\**" />
     <None Remove="wwwroot\images\books\**" />
   </ItemGroup>
 
@@ -29,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\books\gallery\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 

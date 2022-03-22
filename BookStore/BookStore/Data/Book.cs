@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BookStore.Data
 {
@@ -17,5 +18,6 @@ namespace BookStore.Data
 
         public Language Language { get; set; }
         public Category Category { get; set; }
+        public ICollection<BookGallery> bookGallery { get; set; }
     }
 }

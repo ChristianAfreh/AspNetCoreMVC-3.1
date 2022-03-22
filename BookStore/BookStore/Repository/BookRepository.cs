@@ -30,6 +30,17 @@ namespace BookStore.Repository
                 UpdatedOn = DateTime.UtcNow,
                 CoverPhotoUrl = model.CoverPhotoUrl,
             };
+
+            newBook.bookGallery = new List<BookGallery>();
+            
+            foreach(var file in model.Gallery)
+            {
+                newBook.bookGallery.Add(new BookGallery()
+                {
+                    Name = file.Name,
+                    URL = file.URL,
+                });
+            }
             
             await _context.Book.AddAsync(newBook);
             await _context.SaveChangesAsync();
@@ -76,6 +87,12 @@ namespace BookStore.Repository
                     Title = book.Title,
                     TotalPages = book.TotalPages,
                     CoverPhotoUrl = book.CoverPhotoUrl,
+                    Gallery = book.bookGallery.Select(g => new GalleryModel()
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        URL = g.URL
+                    }).ToList()
                 }).FirstOrDefaultAsync();
 
             return book;

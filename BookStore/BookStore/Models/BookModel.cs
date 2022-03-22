@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookStore.Models
@@ -30,6 +31,10 @@ namespace BookStore.Models
         [Required]
         public IFormFile CoverPhoto { get; set; }
         public string CoverPhotoUrl { get; set; }
+        [Display(Name = "Choose the gallery images for your book")]
+        [Required]
+        public IFormFileCollection GalleryFiles { get; set; }
+        public List<GalleryModel> Gallery { get; set; }
 
 
 
