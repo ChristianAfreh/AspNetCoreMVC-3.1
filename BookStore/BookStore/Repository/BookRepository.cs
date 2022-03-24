@@ -29,6 +29,7 @@ namespace BookStore.Repository
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow,
                 CoverPhotoUrl = model.CoverPhotoUrl,
+                BookPdfUrl = model.BookPdfUrl
             };
 
             newBook.bookGallery = new List<BookGallery>();
@@ -87,6 +88,7 @@ namespace BookStore.Repository
                     Title = book.Title,
                     TotalPages = book.TotalPages,
                     CoverPhotoUrl = book.CoverPhotoUrl,
+                    BookPdfUrl = book.BookPdfUrl,
                     Gallery = book.bookGallery.Select(g => new GalleryModel()
                     {
                         Id = g.Id,
