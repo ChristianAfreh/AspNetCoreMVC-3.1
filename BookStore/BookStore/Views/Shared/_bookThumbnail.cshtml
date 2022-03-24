@@ -1,12 +1,15 @@
-﻿<div class="card mb-4 shadow-sm">
-    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/xhtml"></svg>
+﻿@model BookModel
+
+<div class="card mb-4 shadow-sm  card">
+    <img src="@(string.IsNullOrEmpty(Model.CoverPhotoUrl) ? "/images/default_image.png" : Model.CoverPhotoUrl)" style="height:300px" />
     <div class="card-body">
-        <p class="card-text">This section will be used to display the short description of the book</p>
+        <h3 class="h3" style=" overflow: hidden; text-overflow: ellipsis; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; ">@(string.IsNullOrEmpty(Model.Title) ? "No Title Added" : Model.Title)</h3>
+        <p class="card-text" style=" overflow: hidden; text-overflow: ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; ">@(string.IsNullOrEmpty(Model.Description) ? "No Description Added" : Model.Description)</p>
         <div class="d-flex justify-content-between align-items-center">
             <div class="btn-group">
-                <a href="#" class="btn btn-sm btn-outline-secondary">View details</a>
+                <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
             </div>
-            <small class="text-muted">Author name</small>
+            <small class="text-muted">@(string.IsNullOrEmpty(Model.Author) ? "No Author Added" : Model.Author)</small>
         </div>
     </div>
 </div>
