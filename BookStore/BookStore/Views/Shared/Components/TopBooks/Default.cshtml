@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BookModel>
+
+<div class="row">
+    @foreach (var book in Model)
+    {
+        <div class="col-md-4">
+            <partial name="_bookThumbnail" model="book" />
+
+        </div>
+    }
+</div>
+
+
+@* @Html.Partial("_bookThumbnail", new BookModel())
+    @await Html.PartialAsync("_bookThumbnail",new BookModel())
+    @{
+    Html.RenderPartial("_bookThumbnail", new BookModel());
+    await Html.RenderPartialAsync("_bookThumbnail", new BookModel());
+    }*@

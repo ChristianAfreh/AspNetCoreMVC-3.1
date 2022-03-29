@@ -30,9 +30,9 @@ namespace BookStore
                 option.HtmlHelperOptions.ClientValidationEnabled = true;    
             });
 #endif
-            services.AddScoped<BookRepository, BookRepository>();
-            services.AddScoped<LanguageRepository, LanguageRepository>();
-            services.AddScoped<CategoryRepository, CategoryRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

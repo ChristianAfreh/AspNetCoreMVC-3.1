@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Repository
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly BookStoreContext _context;
         public CategoryRepository(BookStoreContext context)
