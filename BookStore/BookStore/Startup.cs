@@ -33,19 +33,21 @@ namespace BookStore
             services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<BookStoreContext>();
+                .AddEntityFrameworkStores<BookStoreContext>().AddDefaultTokenProviders();
 
             //Configure password complexity with identity core
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    options.Password.RequiredLength = 5;
-            //    options.Password.RequiredUniqueChars = 1;
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequireLowercase = false;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireUppercase = false;
+            services.Configure<IdentityOptions>(options =>
+            {
+                //    options.Password.RequiredLength = 5;
+                //    options.Password.RequiredUniqueChars = 1;
+                //    options.Password.RequireDigit = false;
+                //    options.Password.RequireLowercase = false;
+                //    options.Password.RequireNonAlphanumeric = false;
+                //    options.Password.RequireUppercase = false;
 
-            //});
+                options.SignIn.RequireConfirmedEmail = true;
+
+            });
 
             services.ConfigureApplicationCookie(config =>
             {
@@ -65,9 +67,12 @@ namespace BookStore
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
 
 
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
+
+            services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));  
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

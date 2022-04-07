@@ -38,7 +38,7 @@ namespace BookStore.Controllers
                 }
 
                 ModelState.Clear();
-                return View();
+                return RedirectToAction("ConfirmEmail", new {email = userModel.Email });
             }
             return View(userModel);
         }
@@ -63,7 +63,15 @@ namespace BookStore.Controllers
                     }
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Invalid Credentials");
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", "Not allowed to login");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Credentials");
+
+                }
             }
             return View(signInUserModel);
             
@@ -101,6 +109,49 @@ namespace BookStore.Controllers
                 }
             }
            
+            return View(model);
+        }
+
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string uid, string token, string email)
+        {
+            EmailConfirmModel model = new EmailConfirmModel
+            {
+                Email = email
+            };
+
+            if(!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            {
+                token = token.Replace(' ', '+');
+                var result = await _accountRepository.ConfirmEmail(uid, token);
+                if (result.Succeeded)
+                {
+                    model.EmailVerified = true;
+                }
+            }
+            return View(model);
+        }
+
+        [HttpPost("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(EmailConfirmModel model)
+        {
+            var user = await _accountRepository.GetUserByEmailAsync(model.Email);
+            if(user != null)
+            {
+                if (user.EmailConfirmed)
+                {
+                    model.IsConfirmed = true;
+                    return View(model);
+                }
+                
+                await _accountRepository.GenerateEmailConfirmationTokenAsync(user);
+                model.EmailSent = true;
+                ModelState.Clear();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+            }
             return View(model);
         }
 
