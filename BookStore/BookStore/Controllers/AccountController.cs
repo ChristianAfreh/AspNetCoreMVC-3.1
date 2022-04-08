@@ -126,7 +126,7 @@ namespace BookStore.Controllers
                 var result = await _accountRepository.ConfirmEmail(uid, token);
                 if (result.Succeeded)
                 {
-                    model.EmailVerified = true;
+                    model.IsConfirmed = true;
                 }
             }
             return View(model);
@@ -140,7 +140,7 @@ namespace BookStore.Controllers
             {
                 if (user.EmailConfirmed)
                 {
-                    model.IsConfirmed = true;
+                    model.EmailVerified = true;
                     return View(model);
                 }
                 
