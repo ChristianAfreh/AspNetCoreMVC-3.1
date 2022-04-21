@@ -118,6 +118,37 @@ namespace BookStore.Repository
 
         }
 
+        public void UpdateBookAsync(BookModel model)
+        {
+            var book = _context.Book.FirstOrDefault(x => x.Id == model.Id);
+            if(book != null)
+            {
+                book.Title = model.Title;
+                book.Author = model.Author;
+                book.Description = model.Description;
+                book.LanguageId = model.LanguageId;
+                book.CategoryId = model.CategoryId;
+                book.TotalPages = model.TotalPages;
+                book.CoverPhotoUrl = model.CoverPhotoUrl;
+                book.BookPdfUrl = model.BookPdfUrl;
+                book.bookGallery = new List<BookGallery>();
+                model.Gallery = new List<GalleryModel>();
+                foreach(var file in model.Gallery)
+                {
+                    book.bookGallery.Add(new BookGallery()
+                    {
+                        Id = file.Id,
+                        Name = file.Name,
+                        URL = file.URL
+                    });
+                }
+            };
+
+            _context.Book.Update(book);
+            _context.SaveChanges();
+            
+        }
+
 
     }
 }

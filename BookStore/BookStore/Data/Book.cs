@@ -11,7 +11,7 @@ namespace BookStore.Data
         public string Description { get; set; }
         public int LanguageId { get; set; }
         public int CategoryId { get; set; }
-        public int TotalPages { get; set; }
+        public int? TotalPages { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string CoverPhotoUrl { get; set; }

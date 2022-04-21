@@ -122,6 +122,38 @@ namespace BookStore.Controllers
             
             return  "/" + folderPath;
         }
+        public async Task<IActionResult> UpdateBook(int Id)
+        {
+            ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+            ViewBag.Category = new SelectList(await _categoryRepository.GetAllCategories(), "Id", "Name");
+
+            try
+            {
+                var result = await _bookRepository.GetBookById(Id);
+                return View(result);
+            }
+            catch(Exception ex)
+            {
+                var errorViewModel = new ErrorViewModel()
+                {
+                    RequestId = ex.Message
+                };
+
+                return View("Error", errorViewModel);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateBook(BookModel model, int bookId)
+        {
+            ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+            ViewBag.Category = new SelectList(await _categoryRepository.GetAllCategories(), "Id", "Name");
+            _bookRepository.UpdateBookAsync(model);
+            return RedirectToAction("GetAllBooks", new {id  = bookId });
+        }
+        public IActionResult DeleteBook()
+        {
+           return View();
+        }
     }
 }
 

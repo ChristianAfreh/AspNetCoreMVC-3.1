@@ -1,0 +1,80 @@
+﻿@model BookStore.Models.BookModel
+
+@{
+    ViewData["Title"] = "Update Book";
+}
+
+<div class="container">
+    <h3 class="h3">Update Book</h3>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="UpdateBook">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" class="form-control" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LanguageId" class="control-label"></label>
+                    <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language">
+                        <option value="" selected>Choose book language</option>
+                    </select>
+                    <span asp-validation-for="LanguageId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label"></label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Category">
+                        <option value="" selected>Choose book category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalPages" class="control-label"></label>
+                    <input asp-for="TotalPages" class="form-control" />
+                    <span asp-validation-for="TotalPages" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CoverPhoto" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="CoverPhoto" class="form-control custom-file-input" id="customFile" />
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <span asp-validation-for="CoverPhoto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GalleryFiles" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="GalleryFiles" class="form-control custom-file-input" id="customFile" />
+                        <label class="custom-file-label" for="customFile">Choose files</label>
+                    </div>
+                    <span asp-validation-for="GalleryFiles" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BookPdf" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="BookPdf" class="form-control custom-file-input" id="customFile" />
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <span asp-validation-for="BookPdf" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update Book" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
