@@ -118,9 +118,9 @@ namespace BookStore.Repository
 
         }
 
-        public void UpdateBookAsync(BookModel model)
+        public async Task<int> UpdateBookAsync(BookModel model)
         {
-            var book = _context.Book.FirstOrDefault(x => x.Id == model.Id);
+            var book = await _context.Book.FirstOrDefaultAsync(x => x.Id == model.Id);
             if(book != null)
             {
                 book.Title = model.Title;
@@ -132,21 +132,20 @@ namespace BookStore.Repository
                 book.CoverPhotoUrl = model.CoverPhotoUrl;
                 book.BookPdfUrl = model.BookPdfUrl;
                 book.bookGallery = new List<BookGallery>();
-                model.Gallery = new List<GalleryModel>();
-                foreach(var file in model.Gallery)
+                foreach (var file in model.Gallery)
                 {
                     book.bookGallery.Add(new BookGallery()
                     {
-                        Id = file.Id,
                         Name = file.Name,
                         URL = file.URL
                     });
                 }
             };
 
-            _context.Book.Update(book);
+           _context.Book.Update(book);
             _context.SaveChanges();
-            
+
+            return book.Id;
         }
 
 

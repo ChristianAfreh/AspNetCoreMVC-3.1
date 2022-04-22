@@ -49,17 +49,9 @@ namespace BookStore.Controllers
         {
             ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(),"Id","Name");
             ViewBag.Category = new SelectList(await _categoryRepository.GetAllCategories(),"Id","Name");
-
-
-            //var model = new BookModel()
-            //{
-            //    LanguageId = 2
-            //};
-
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = bookId;
             return View();
-            //model
         }
         [HttpPost]
         public async Task<IActionResult> AddNewBook(BookModel bookModel)
@@ -122,11 +114,12 @@ namespace BookStore.Controllers
             
             return  "/" + folderPath;
         }
-        public async Task<IActionResult> UpdateBook(int Id)
+        public async Task<IActionResult> UpdateBook(int Id, bool isSuccess = false )
         {
             ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
             ViewBag.Category = new SelectList(await _categoryRepository.GetAllCategories(), "Id", "Name");
-
+            ViewBag.IsSuccess = isSuccess;
+            ViewBag.BookId = Id;
             try
             {
                 var result = await _bookRepository.GetBookById(Id);
@@ -145,10 +138,51 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateBook(BookModel model, int bookId)
         {
+            bookId = model.Id;
             ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
             ViewBag.Category = new SelectList(await _categoryRepository.GetAllCategories(), "Id", "Name");
-            _bookRepository.UpdateBookAsync(model);
-            return RedirectToAction("GetAllBooks", new {id  = bookId });
+
+            if (ModelState.IsValid)
+            {
+                if (model.CoverPhoto != null)
+                {
+                    string folder = "books/cover/";
+                    model.CoverPhotoUrl = await UploadImage(folder, model.CoverPhoto);
+                }
+                if (model.GalleryFiles != null)
+                {
+                    string folder = "books/gallery/";
+
+                    model.Gallery = new List<GalleryModel>();
+
+
+                    foreach (var file in model.GalleryFiles)
+                    {
+                        var gallery = new GalleryModel()
+                        {
+                            Name = file.FileName,
+                            URL = await UploadImage(folder, file),
+                        };
+
+                        model.Gallery.Add(gallery);
+                    }
+
+                }
+
+                if (model.BookPdf != null)
+                {
+                    string folder = "books/pdf/";
+                    model.BookPdfUrl = await UploadImage(folder, model.BookPdf);
+                }
+
+                var Id = await _bookRepository.UpdateBookAsync(model);
+                if (Id > 0)
+                {
+                    return RedirectToAction(nameof(UpdateBook), new { isSuccess = true, Id = bookId });
+                }
+            }
+
+            return View();
         }
         public IActionResult DeleteBook()
         {
