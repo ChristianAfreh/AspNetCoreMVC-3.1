@@ -114,6 +114,8 @@ namespace BookStore.Controllers
             
             return  "/" + folderPath;
         }
+        
+        [Authorize]
         public async Task<IActionResult> UpdateBook(int Id, bool isSuccess = false )
         {
             ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
